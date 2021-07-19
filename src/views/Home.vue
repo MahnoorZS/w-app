@@ -16,7 +16,7 @@
       </div>
       
       <!-- <router-link to="/about" tag="button">Home</router-link> -->
-      <router-link to="/about">
+      <router-link to="/about" style="margin-left: 20px;">
         <button id="searchbtn" type="button">search</button>
       </router-link>
       

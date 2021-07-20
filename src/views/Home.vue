@@ -3,22 +3,21 @@
     <main>
       
       <h2>The Weather App</h2>
-       <!-- <button id="searchbtn" type="button" v-on:click="showWeatherComponent()">Search forecast.</button> -->
-<!-- serach/display weather page -->
+       
       <div class="search-box">
         <input type="text" 
                class="search-bar"
                placeholder="Search..."
                v-model="query"
                @keypress="fetchWeather">
-               
                <!-- binding the query with v-model -->
-      </div>
+       </div>
       
-      <!-- <router-link to="/about" tag="button">Home</router-link> -->
-      <router-link to="/about" style="margin-left: 20px;">
-        <button id="searchbtn" type="button">search</button>
-      </router-link>
+      <!-- <div class="wrapper">
+        <button id="searchbtn" type="button"><router-link to="/" style="color: blanchedalmond; text-decoration: none; display:block;">Back</router-link></button>
+      </div> -->
+        <!-- <router-link to="/about">search</router-link> -->
+      
       
       <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
         
@@ -32,17 +31,59 @@
           </div>
           <div class="weather-box">
             
-            <div class="temp">{{ Math.round(weather.main.temp) }} °C
+            <div class="temp">
+              <div class="weather"> {{ weather.weather[0].main }} ({{ weather.weather[0].description }})</div>
+              {{ Math.round(weather.main.temp) }} °C
               <img :src="weatherSrc" alt="" class="icon">
               <div class="feelslike">Feels like: {{Math.round(weather.main.feels_like) }} °C</div>
             </div>
-            <div class="weather">{{ weather.weather[0].description }}</div>
+            <!-- <div class="weather"> {{ weather.weather[0].main }} - {{ weather.weather[0].description }}</div> -->
             
           </div>
           <div class="weather-box2">
-            <div class="humidity">Humidity: {{ Math.round(weather.main.humidity) }} %</div>
+            <table class="center">
+              <tr>
+                <td class="name">Humidity</td>
+                <td class="name">|</td>
+                <td class="name">Min temp</td>
+                <td class="name">|</td>
+                <td class="name">Max temp</td>
+                
+                <!-- <td class="value"> {{ Math.round(weather.main.humidity) }}%</td> -->
+              </tr>
+              <tr>
+                <!-- <td class="name">Min temp:</td> -->
+                <td class="value"> {{ Math.round(weather.main.humidity) }}%</td>
+                <td class="value">|</td>
+                <td class="value"> {{ Math.round(weather.main.temp_min) }}°C</td>
+                <td class="value">|</td>
+                <td class="value"> {{ Math.round(weather.main.temp_max) }}°C</td>
+              </tr>
+              <tr>
+                <td class="name">Sunrise</td>
+                <td class="name">|</td>
+                <td class="name">Sunset</td>
+                <td class="name">|</td>
+                <td class="name">Timezone</td>
+                
+                <!-- <td class="value"> {{ Math.round(weather.main.humidity) }}%</td> -->
+              </tr>
+              <tr>
+                <!-- <td class="name">Min temp:</td> -->
+                <td class="value"> {{ Math.round(weather.sys.sunrise) }}</td>
+                <td class="value">|</td>
+                <td class="value"> {{ Math.round(weather.sys.sunset) }}</td>
+                <td class="value">|</td>
+                <td class="value"> {{ Math.round(weather.main.timezone) }}</td>
+              </tr>
+              <!-- <tr>
+                <td class="name">Max temp:</td>
+                <td class="value"> {{ Math.round(weather.main.temp_max) }}°C</td>
+              </tr> -->
+            </table>
+            <!-- <div class="humidity">Humidity: {{ Math.round(weather.main.humidity) }} %</div>
             <div class="mintemp">Min temp: {{ Math.round(weather.main.temp_min) }} °C</div>
-            <div class="maxtemp">Max temp: {{Math.round(weather.main.temp_max) }} °C</div>
+            <div class="maxtemp">Max temp: {{Math.round(weather.main.temp_max) }} °C</div> -->
             
              <!-- <div class="icon">Icon: {{weather.sys.sunrise}}</div> -->
             <!-- <img src="" alt="" class="icon"> -->
@@ -54,6 +95,7 @@
 </template>
 
 <script>
+// import Home from "../views/Home.vue";
 
 export default {
   name: 'app',
@@ -105,14 +147,8 @@ export default {
       }
       const icon = this.weather.weather[0].icon;
       this.weatherSrc = "https://openweathermap.org/img/wn/" + icon  + "@2x.png";
-      // document.querySelector(".icon").src = "https://openweathermap.org/img/wn/" + icon  + "@2x.png";
-     
-      // document.querySelectorAll("div#app.home.clouds > main > div.weather-wrap > div.location-box > div.weather-box2 > img.icon").src = "https://openweathermap.org/img/wn/" + icon  + "@2x.png";
-      // document.querySelector(".weather-box2 > .icon").src = "https://openweathermap.org/img/wn/" + icon  + "@2x.png";
-      // console.log(icon);
-
-
-    },
+      
+      },
 
     dateBuilder () {
       let d = new Date();
@@ -129,15 +165,28 @@ export default {
 </script>
 
 <style scoped>
+
+
+.wrapper{
+text-align: center;
+color: blanchedalmond;
+color: blanchedalmond;
+}
+
 button {
- color:blueviolet;
- background: none;
- border: none;
- font-size: 30px;
- display: block;
- text-align: center;
- position: absolute;
- justify-content: center;
+ font-family: Georgia, 'Times New Roman', Times, serif;
+  color:rgba(243, 206, 150, 0.925);
+  font-style: bold;
+  font-size: 30px;
+  text-align: center;
+  display: inline-block; 
+  appearance: none;
+  border: none;
+  outline: none;
+  background: block;
+  background-color: rgba(0, 0, 0, 0.349);
+  padding: 20px;
+  border-radius:12px;
 }
 
 * {
@@ -163,7 +212,7 @@ body {
 }
 
 #app {
-  background-image: url('../assets/4seasons.jpg');
+  background-image: url("../assets/4seasons.jpg");
   background-size: cover;
   background-position: center;
   transition: 0.4s;
@@ -178,27 +227,27 @@ width: 100%;
 }
 
 #app.clear {
-  background-image: url('../assets/sunny-gif.gif'); ;
+  background-image: url("../assets/sunny-gif.gif"); ;
 }
 
 #app.rain {
-  background-image: url('../assets/rain-gif.gif'); ;
+  background-image: url("../assets/rain-gif.gif"); ;
 }
 
 #app.clouds {
-  background-image: url('../assets/clouds-gif.gif'); ;
+  background-image: url("../assets/clouds-gif.gif"); ;
 }
 
 #app.snow {
-  background-image: url('../assets/snow-gif.gif'); ;
+  background-image: url("../assets/snow-gif.gif"); ;
 }
 
 #app.smoke {
-  background-image: url('../assets/smoke-gif.gif'); ;
+  background-image: url("../assets/smoke-gif.gif"); ;
 }
 
 #app.haze {
-  background-image: url('../assets/haze-gif.gif'); ;
+  background-image: url("../assets/haze-gif.gif"); ;
 }
 
 main {
@@ -218,6 +267,9 @@ main {
   padding: 15px;
   color: #313131;
   font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
   
   appearance: none;
   border: none;
@@ -256,18 +308,6 @@ main {
   text-align: center;
 }
 
-/* .weather-box .icon {
-  display: inline-block;
-  padding: 10px 25px;
-  color: #FFF;
-  font-size: 102px;
-  font-weight: 900;
-  text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
-  background-color:rgba(255, 255, 255, 0.25);
-  border-radius: 16px;
-  margin: 30px 0px;
-  box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
-} */
 .weather-box .temp {
   display: inline-block;
   padding: 10px 25px;
@@ -283,17 +323,43 @@ main {
 
 .weather-box .weather {
   color: #FFF;
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 700;
-  font-style: italic;
-  text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+  /* font-style: italic; */
+  text-shadow: 2px 5px rgba(0, 0, 0, 0.25);
 }
 
 
 .weather-box .feelslike{
   font-size: 25px;
   color: black;
+  text-shadow: 0.7px 3.2px rgba(0, 0, 0, 0.25);
 }
 
+.weather-box2{
+  text-align: center;
+  margin: 30px 0px;
+}
 
+table{
+  display: inline-block;
+  font-size: 25px;
+  text-shadow: 0.7px 3.2px rgba(0, 0, 0, 0.25);
+  background-color:rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+}
+
+td.name{
+  color: #FFF;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+td.value{
+  color:black;
+  padding-left: 5px;
+  padding-right: 5px;
+}
 </style>
